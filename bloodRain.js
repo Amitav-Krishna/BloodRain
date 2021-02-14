@@ -1,54 +1,55 @@
 // inspired by the coding train's purple rain video
-// made using p5.js
-let NUM_DROPS = 300;
-let thicbert = [];
-let dropPos = [];
-let dropVel = [];
+// https://thecodingtrain.com/CodingChallenges/004-purplerain.html
+let NUM_DROPS = 300; // number of raindrops
+let GRAVITY = 0.09;
+
+let sizes = [];
+let positions = [];
+let velocities = [];
 
 let acceleration;
 
 function setup() {
+  //draw canvas
   createCanvas(400, 400);
-  var height = 10;
-  
 
-  // where is the drop
-  
+  // start the drops with random positions, velocities and sizes
   for (let i = 0; i < NUM_DROPS; i++) {
-    dropPos.push(createVector(random(390, 10), random(200, 10)));
-    dropVel.push(createVector(0, 1));
-    thicbert.push(random(5, 10));
+    positions.push(createVector(random(390, 10), random(200, 10)));
+    velocities.push(createVector(0, 1));
+    sizes.push(random(2, 10));
   }
   
-  // how much faster it is going and how much its direction is changing
-  acceleration = createVector(0, 0.09);
+  // create the acceleration vector
+  acceleration = createVector(0, GRAVITY);
 }
-
-
-
     
 function draw() {
+  // set the background as black
   background(0);
-
-  //
-  for(let i = 0; i < NUM_DROPS; i++){
-      
-    pos = dropPos[i] 
-    velocity = dropVel[i];
-    
-    stroke(255, 0, 0) 
-    strokeWeight(thicbert[i]);
-    point(pos);
+  stroke(255, 0, 0);
   
-    if(pos.y > 395){
-
-      pos.y = 1;
-    }
-    if(pos.y <= 1){
+  // iterate through each drop
+  for(let i = 0; i < NUM_DROPS; i++){
+    // get this drop's position and velocity
+    position = positions[i] 
+    velocity = velocities[i];
+    
+    // set the point's size
+    strokeWeight(sizes[i]);
+  
+    // if it is below the bottom of the screen move it to the top and set the speed as 1
+    if(position.y > 395){
+      position.y = 1;
       velocity.y = 1;
     }
-    pos.add(velocity);
+    
+    // move the raindrop
+    position.add(velocity);
+    // increase the raindrop's speed
     velocity.add(acceleration);
+    
+    // draw the raindrop
+    point(position);
   }
-  
 }
