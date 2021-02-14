@@ -20,7 +20,7 @@ function setup() {
     sizes.push(random(2, 10));
   }
   
-  // create the velocity vector
+  // create the acceleration vector
   acceleration = createVector(0, GRAVITY);
 }
     
